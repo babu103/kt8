@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trail1
+  labels: 
+    app: spc
+    rd: 100723
+  annotations:
+    this is kalyan's first deployment trail 
+  namespace: kalyan
+spec:
+  minReadySeconds: 5
+  replicas: 10
+  selector:
+    matchLabels:
+      app: spc
+  strategy:
+    rollingUpdate:
+      maxSurge: 20%
+      maxUnavailable: 20%
+    type: RollingUpdate
+  template:
+    metadata:
+      name: spc
+      labels:
+        app: spc
+    spec:
+      containers:
+        - name: spc_cont
+          image: <IMAGE>
+          ports:
+            - containerPort: 8080
+              name: spc-ports
+              protocol: TCP
+---
